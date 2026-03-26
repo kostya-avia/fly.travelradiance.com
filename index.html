@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fly Travel Radiance - Авіаквитки онлайн</title>
+  <meta name="description" content="Онлайн бронювання авіаквитків для приватних та корпоративних клієнтів." />
+  <style>
+    :root {
+      --bg: #07101d;
+      --bg-soft: rgba(255, 255, 255, 0.08);
+      --card: rgba(255, 255, 255, 0.12);
+      --line: rgba(255, 255, 255, 0.18);
+      --text: #f5f7fb;
+      --muted: rgba(245, 247, 251, 0.78);
+      --accent: #ffffff;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --container: 1240px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, #050c16 0%, #081221 35%, #060d16 100%);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--container));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      padding: 28px 0 48px;
+      background:
+        linear-gradient(180deg, rgba(5, 11, 20, 0.38) 0%, rgba(5, 11, 20, 0.55) 32%, rgba(5, 11, 20, 0.82) 100%),
+        url('hero-bg.png') center center / cover no-repeat;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 180px;
+      background: linear-gradient(180deg, rgba(5, 11, 20, 0) 0%, #07101d 100%);
+      pointer-events: none;
+    }
+
+    .hero-top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(4, 9, 16, 0.28);
+      backdrop-filter: blur(8px);
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.65);
+      flex: 0 0 auto;
+    }
+
+    .hero-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-link {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(7, 16, 29, 0.24);
+      font-size: 14px;
+      color: var(--muted);
+      transition: 0.25s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      margin-bottom: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(8, 17, 29, 0.2);
+      backdrop-filter: blur(8px);
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 7vw, 78px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+
+    .hero-text {
+      width: min(100%, 760px);
+      margin: 18px auto 0;
+      font-size: clamp(17px, 2.2vw, 22px);
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 0 26px;
+      border-radius: 18px;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.01em;
+      border: 1px solid transparent;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: rgba(255, 255, 255, 0.96);
+      color: #08111d;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.24);
+      background: rgba(7, 16, 29, 0.34);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-search {
+      position: relative;
+      z-index: 2;
+      width: min(calc(100% - 32px), 1320px);
+      margin: 34px auto 0;
+      padding: 12px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .hero-search-inner {
+      overflow: hidden;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid rgba(4, 9, 16, 0.08);
+      min-height: clamp(680px, 76vh, 980px);
+    }
+
+    .hero-search iframe {
+      width: 100%;
+      height: clamp(680px, 76vh, 980px);
+      border: 0;
+      display: block;
+      background: #ffffff;
+    }
+
+    .divider {
+      position: relative;
+      height: clamp(96px, 12vw, 140px);
+      background:
+        linear-gradient(180deg, rgba(7, 16, 29, 0.3) 0%, rgba(7, 16, 29, 0.72) 100%),
+        url('divider-bg.png') center center / cover no-repeat;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: min(34vw, 440px);
+      height: 1px;
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateY(-50%);
+    }
+
+    .divider::before {
+      left: max(16px, calc(50% - 560px));
+    }
+
+    .divider::after {
+      right: max(16px, calc(50% - 560px));
+    }
+
+    .divider-plane {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(7, 16, 29, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .divider-plane svg {
+      width: 24px;
+      height: 24px;
+      fill: rgba(255, 255, 255, 0.92);
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      margin: 0 0 20px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .section-text {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .faq-list {
+      padding: 14px;
+    }
+
+    .faq-item {
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .faq-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .faq-item summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px 22px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 17px;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary span:last-child {
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .faq-item[open] summary span:last-child {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 22px 20px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .side-card {
+      padding: 28px;
+      height: 100%;
+    }
+
+    .side-card h3 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .side-card p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .check-item svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      flex: 0 0 auto;
+      fill: rgba(255, 255, 255, 0.92);
+    }
+
+    .benefits {
+      padding-top: 0;
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .benefit-card {
+      padding: 28px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .benefit-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: rgba(255, 255, 255, 0.95);
+    }
+
+    .benefit-card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .benefit-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .contacts-card,
+    .bank-card {
+      padding: 28px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .contacts-card h3,
+    .bank-card h3 {
+      margin: 0 0 16px;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .contact-row:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .contact-label {
+      display: block;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .contact-value {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .icon-btn {
+      width: 58px;
+      height: 58px;
+      flex: 0 0 auto;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      transition: 0.22s ease;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .icon-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: rgba(255, 255, 255, 0.94);
+    }
+
+    .bank-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .bank-item {
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .bank-item strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .footer-visual {
+      position: relative;
+      min-height: 360px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(5, 11, 20, 0.5) 0%, rgba(5, 11, 20, 0.2) 35%, rgba(5, 11, 20, 0.7) 100%),
+        url('footer-bg.png') center center / cover no-repeat;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .footer-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7, 16, 29, 0.2) 0%, rgba(7, 16, 29, 0.55) 100%);
+    }
+
+    .footer-visual-content {
+      position: relative;
+      z-index: 2;
+      width: min(calc(100% - 32px), 860px);
+      padding: 48px 0;
+    }
+
+    .footer-visual h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+    }
+
+    .footer-visual p {
+      margin: 0 auto 24px;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .site-footer {
+      padding: 18px 0 28px;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 14px;
+    }
+
+    .site-footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1120px) {
+      .faq-grid,
+      .contacts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .benefit-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .hero {
+        padding-top: 20px;
+      }
+
+      .hero-top {
+        margin-bottom: 42px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-nav {
+        justify-content: center;
+      }
+
+      .brand {
+        justify-content: center;
+      }
+
+      h1 {
+        line-height: 1.02;
+      }
+
+      .hero-search {
+        padding: 10px;
+        border-radius: 24px;
+      }
+
+      .hero-search-inner,
+      .hero-search iframe {
+        min-height: 980px;
+        height: 980px;
+      }
+
+      .section {
+        padding: 58px 0;
+      }
+
+      .contacts-card,
+      .bank-card,
+      .benefit-card,
+      .side-card {
+        padding: 22px;
+      }
+
+      .contact-value {
+        font-size: 18px;
+      }
+
+      .divider::before,
+      .divider::after {
+        width: 24vw;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(calc(100% - 20px), var(--container));
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .nav-link {
+        width: calc(50% - 5px);
+        text-align: center;
+      }
+
+      .hero-search {
+        width: min(calc(100% - 20px), 1320px);
+      }
+
+      .faq-item summary {
+        padding: 18px;
+        font-size: 16px;
+      }
+
+      .faq-answer {
+        padding: 0 18px 18px;
+      }
+
+      .contact-row {
+        align-items: flex-start;
+      }
+
+      .divider::before,
+      .divider::after {
+        display: none;
+      }
+
+      .site-footer .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="container">
+      <div class="hero-top">
+        <a class="brand" href="#top" aria-label="Fly Travel Radiance">
+          <span class="brand-dot"></span>
+          <span>Fly Travel Radiance</span>
+        </a>
+
+        <nav class="hero-nav" aria-label="Основна навігація">
+          <a class="nav-link" href="#booking">Бронювання</a>
+          <a class="nav-link" href="#faq">FAQ</a>
+          <a class="nav-link" href="#contacts">Контакти</a>
+        </nav>
+      </div>
+
+      <div class="hero-content">
+        <div class="eyebrow">Онлайн бронювання авіаквитків</div>
+        <h1>Авіаквитки онлайн для приватних та корпоративних клієнтів</h1>
+        <p class="hero-text">
+          Зручний пошук рейсів, чесні тарифи, швидке оформлення та підтримка 24/7 в одному рішенні.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#booking">Забронювати</a>
+          <a class="btn btn-secondary" href="#contacts">Корпоративним клієнтам</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-search" id="booking">
+      <div class="hero-search-inner">
+        <iframe
+          src="https://my.fly.travelradiance.com"
+          title="Пошук авіаквитків"
+          loading="eager"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="clipboard-write; fullscreen"
+        ></iframe>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider" aria-hidden="true">
+    <div class="divider-plane">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21.8 11.3 13.9 8.7 10.6 2.4a1 1 0 0 0-1.9.5l.9 6.3-5.2-1.7-1.7-2.5a.8.8 0 0 0-1.4.2l-.5 1.6a.8.8 0 0 0 .5 1l4.9 1.6-4.9 1.6a.8.8 0 0 0-.5 1l.5 1.6a.8.8 0 0 0 1.4.2l1.7-2.5 5.2-1.7-.9 6.3a1 1 0 0 0 1.9.5l3.3-6.3 7.9-2.6a1 1 0 0 0 0-1.9Z"></path>
+      </svg>
+    </div>
+  </div>
+
+  <main>
+    <section class="section" id="faq">
+      <div class="container faq-grid">
+        <div>
+          <h2 class="section-title">FAQ</h2>
+          <p class="section-text">
+            Відповіді на найпоширеніші запитання щодо бронювання, оплати та підтримки.
+          </p>
+
+          <div class="panel faq-list" style="margin-top: 24px;">
+            <details class="faq-item" open>
+              <summary>
+                <span>Як відбувається бронювання квитка?</span>
+                <span>+</span>
+              </summary>
+              <div class="faq-answer">
+                Ви обираєте потрібний рейс, заповнюєте дані пасажира та переходите до оформлення. Після підтвердження замовлення ви отримуєте маршрут-квитанцію на email.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Чи є підтримка у разі змін або скасувань?</span>
+                <span>+</span>
+              </summary>
+              <div class="faq-answer">
+                Так. Ми супроводжуємо бронювання та допомагаємо з обміном, поверненням або уточненням правил тарифу відповідно до умов перевізника.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Чи можна замовити квитки для компанії?</span>
+                <span>+</span>
+              </summary>
+              <div class="faq-answer">
+                Так, ми працюємо з корпоративними клієнтами та можемо організувати регулярні відрядження, групові перельоти та персональний супровід.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Як отримати документи для бухгалтерії?</span>
+                <span>+</span>
+              </summary>
+              <div class="faq-answer">
+                Після оформлення замовлення ми можемо надати необхідні документи для оплати та звітності. За потреби зверніться через контакти нижче.
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <aside class="panel side-card">
+          <h3>Подорож без зайвих кроків</h3>
+          <p>
+            Сервіс створений так, щоб пошук і бронювання займали мінімум часу, а вся важлива інформація була під рукою.
+          </p>
+
+          <div class="check-list">
+            <div class="check-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 16.6 4.9 12.3l-1.4 1.4 5.7 5.7L20.5 8.1l-1.4-1.4-9.9 9.9Z"/></svg>
+              <div>Швидкий доступ до пошуку рейсів у вбудованому модулі.</div>
+            </div>
+            <div class="check-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 16.6 4.9 12.3l-1.4 1.4 5.7 5.7L20.5 8.1l-1.4-1.4-9.9 9.9Z"/></svg>
+              <div>Зрозуміла структура для приватних і корпоративних клієнтів.</div>
+            </div>
+            <div class="check-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 16.6 4.9 12.3l-1.4 1.4 5.7 5.7L20.5 8.1l-1.4-1.4-9.9 9.9Z"/></svg>
+              <div>Готовність до запуску на GitHub Pages без додаткових файлів стилів.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section benefits">
+      <div class="container">
+        <div class="benefit-grid">
+          <article class="benefit-card">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Zm0 2.2 6 2.2v4.6c0 4.1-2.6 8-6 9.1-3.4-1.1-6-5-6-9.1V6.4l6-2.2Zm-1.2 10.7-2.3-2.3-1.4 1.4 3.7 3.7 6-6-1.4-1.4-4.6 4.6Z"/></svg>
+            </div>
+            <h3>Чесні тарифи</h3>
+            <p>Актуальні пропозиції без зайвого візуального шуму, зі зручним пошуком потрібного рейсу.</p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-7 7v3.1A3 3 0 0 0 3 16v2a3 3 0 0 0 3 3h2v-2H6a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h2v-5a5 5 0 1 1 10 0v5h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2v2h2a3 3 0 0 0 3-3v-2a3 3 0 0 0-2-2.9V10a7 7 0 0 0-7-7Zm-2 10h4v6h-4v-6Z"/></svg>
+            </div>
+            <h3>Підтримка 24/7</h3>
+            <p>Допомога у питаннях оформлення, уточнення правил тарифів, змін та супроводу бронювання.</p>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M10 4h4a2 2 0 0 1 2 2v1h3a2 2 0 0 1 2 2v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V9a2 2 0 0 1 2-2h3V6a2 2 0 0 1 2-2Zm4 3V6h-4v1h4Zm5 5H5v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5Zm-1-3H6a1 1 0 0 0-1 1v1h14v-1a1 1 0 0 0-1-1Z"/></svg>
+            </div>
+            <h3>Корпоративним клієнтам</h3>
+            <p>Рішення для відряджень, регулярних поїздок команди та окремого супроводу бізнес-бронювань.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacts">
+      <div class="container contacts-grid">
+        <div class="contacts-card">
+          <h3>Контакти</h3>
+
+          <div class="contact-row">
+            <div>
+              <span class="contact-label">Телефон</span>
+              <a class="contact-value" href="tel:+380000000000">+38 000 000 00 00</a>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div>
+              <span class="contact-label">Email</span>
+              <div class="contact-value">Написати нам</div>
+            </div>
+            <a class="icon-btn" href="mailto:hello@fly.travelradiance.com" aria-label="Написати на email">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 3.2-8 5.3-8-5.3V6l8 5.3L20 6v1.2Z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="bank-card">
+          <h3>Реквізити</h3>
+          <div class="bank-list">
+            <div class="bank-item"><strong>Компанія:</strong> ТОВ «Ваша компанія»</div>
+            <div class="bank-item"><strong>IBAN:</strong> UA00 0000 0000 0000 0000 0000 000</div>
+            <div class="bank-item"><strong>ЄДРПОУ:</strong> 00000000</div>
+            <div class="bank-item"><strong>Банк:</strong> Назва банку</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-visual" aria-label="Нижній візуальний блок">
+      <div class="footer-visual-content">
+        <h2>Плануйте подорож легко</h2>
+        <p>
+          Нижній візуальний блок зараз працює на статичному фоні. Коли підготуєте відео, цей блок можна замінити без зміни структури сторінки.
+        </p>
+        <a class="btn btn-primary" href="#booking">Перейти до пошуку</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© Fly Travel Radiance</div>
+      <div>Готово для GitHub Pages</div>
+    </div>
+  </footer>
+</body>
+</html>
